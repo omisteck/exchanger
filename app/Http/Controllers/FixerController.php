@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\FixerService;
 
+
 class FixerController extends Controller
 {
     protected $fixerService;
@@ -22,4 +23,5 @@ class FixerController extends Controller
     {
         return $this->fixerService->rateList($request);
     }
+
 }

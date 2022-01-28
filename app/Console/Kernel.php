@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Http\Controllers\CronController;
+use App\Models\Threshold;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,7 +17,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        //since this is a demo to quickly get the mail i set it to everyMinute
+        $schedule->call(new CronController)->everyMinute();
     }
 
     /**
