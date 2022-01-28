@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\FixerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +16,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 
+Route::prefix("/v1")->group(function(){
+
+    Route::post('/register', [UserController::class, 'register']);
+    Route::post('/login', [UserController::class, 'login'])->name('login');
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Auth Protected Routes
+    |-------------------------------------------------------------------------
+    */
+
+    Route::prefix('/user')->middleware('auth:api')->group(function(){
+        Route::post('/changecurrency', [FixerController::class, 'changeCurrency']);
+        Route::post('/rates', [FixerController::class, 'rateList']);
+        Route::post('/logout', [UserController::class, 'logout']);
+    });
+
+});
