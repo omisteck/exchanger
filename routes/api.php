@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FixerController;
+use App\Http\Controllers\ThresholdController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +34,13 @@ Route::prefix("/v1")->group(function(){
     */
 
     Route::prefix('/user')->middleware('auth:api')->group(function(){
+
         Route::post('/changecurrency', [FixerController::class, 'changeCurrency']);
+
         Route::post('/rates', [FixerController::class, 'rateList']);
+
+        Route::post('/set/threshold', [ThresholdController::class, 'store']);
+
         Route::post('/logout', [UserController::class, 'logout']);
     });
 
